@@ -19,7 +19,9 @@ export default function SinglePost() {
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get(process.env.REACT_APP_API_URL+"/posts/" + path);
+      const res = await axios.get(
+        process.env.REACT_APP_API_URL + "/api/posts/" + path
+      );
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
@@ -29,7 +31,7 @@ export default function SinglePost() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(process.env.REACT_APP_API_URL+`/posts/${post._id}`, {
+      await axios.delete(process.env.REACT_APP_API_URL + `/posts/${post._id}`, {
         data: { username: user.username },
       });
       window.location.replace("/");
@@ -38,12 +40,12 @@ export default function SinglePost() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(process.env.REACT_APP_API_URL+`/posts/${post._id}`, {
+      await axios.put(process.env.REACT_APP_API_URL + `/posts/${post._id}`, {
         username: user.username,
         title,
         desc,
       });
-      setUpdateMode(false)
+      setUpdateMode(false);
     } catch (err) {}
   };
 
@@ -81,7 +83,10 @@ export default function SinglePost() {
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={process.env.REACT_APP_API_URL+`/?user=${post.username}`} className="link">
+            <Link
+              to={process.env.REACT_APP_API_URL + `/?user=${post.username}`}
+              className="link"
+            >
               <b> {post.username}</b>
             </Link>
           </span>
@@ -90,14 +95,20 @@ export default function SinglePost() {
           </span>
         </div>
         {updateMode ? (
-         <ReactTransliterate
-         renderComponent={(props) => <textarea className="singlePostDescInput" style={{ width: '95vw'}}{...props} />}
-         value={desc}
-         onChangeText={(desc) => {
-           setDesc(desc);
-         }}
-         lang="hi"
-       />
+          <ReactTransliterate
+            renderComponent={(props) => (
+              <textarea
+                className="singlePostDescInput"
+                style={{ width: "95vw" }}
+                {...props}
+              />
+            )}
+            value={desc}
+            onChangeText={(desc) => {
+              setDesc(desc);
+            }}
+            lang="hi"
+          />
         ) : (
           <p className="singlePostDesc">{desc}</p>
         )}

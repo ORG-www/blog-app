@@ -7,7 +7,6 @@ import { Context } from "../../context/Context";
 import { ReactTransliterate } from "react-transliterate";
 import "react-transliterate/dist/index.css";
 
-
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -18,7 +17,7 @@ export default function Write() {
   //   readonly: false,
   //   height: 400
   // };
-  
+
   // const handleUpdate = (event) => {
   //   const editorContent = event.target.innerHTML;
   //   setDesc(editorContent);
@@ -32,17 +31,20 @@ export default function Write() {
       desc,
     };
     if (file) {
-      const data =new FormData();
+      const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post(process.env.REACT_APP_API_URL+"/upload", data);
+        await axios.post(process.env.REACT_APP_API_URL + "/api/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.post(process.env.REACT_APP_API_URL+"/posts", newPost);
+      const res = await axios.post(
+        process.env.REACT_APP_API_URL + "/api/posts",
+        newPost
+      );
       window.location.replace("/post/" + res.data._id);
     } catch (err) {}
   };
@@ -67,7 +69,7 @@ export default function Write() {
             placeholder="Title"
             className="writeInput"
             autoFocus={true}
-            onChange={e=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="writeFormGroup">
@@ -78,13 +80,20 @@ export default function Write() {
             onChange={e=>setDesc(e.target.value)}
           ></textarea> */}
           <ReactTransliterate
-            renderComponent={(props) => <textarea style={{fontSize: '30px',
-            border: 'none',
-            padding: '20px',
-            width: '70vw',
-            backgroundColor: '#f3f5f7',
-            borderRadius: '40px',
-            margin: '25px'}} {...props} />}
+            renderComponent={(props) => (
+              <textarea
+                style={{
+                  fontSize: "30px",
+                  border: "none",
+                  padding: "20px",
+                  width: "70vw",
+                  backgroundColor: "#f3f5f7",
+                  borderRadius: "40px",
+                  margin: "25px",
+                }}
+                {...props}
+              />
+            )}
             placeholder="Desc"
             value={desc}
             onChangeText={(desc) => {

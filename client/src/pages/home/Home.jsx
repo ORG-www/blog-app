@@ -16,7 +16,7 @@ export default function Homepage() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get(process.env.REACT_APP_API_URL+"/posts");
+      const res = await axios.get(process.env.REACT_APP_API_URL + "/api/posts");
       console.log(res);
       setPosts(res.data);
     };
@@ -26,7 +26,7 @@ export default function Homepage() {
     <>
       <Header />
       <div className="home">
-        <Posts posts={posts}/>
+        <Posts posts={posts} />
         <Footer />
       </div>
     </>
