@@ -12,17 +12,17 @@ const ReadMore = ({ children }) => {
   return (
     <p className="postDesc">
       {isReadMore ? post.desc.slice(0, 100) : post.desc}
-      <Link to={"/post/"+ post._id} className="link">
-      <span onClick={toggleReadMore} className="read-or-hide">
-        {isReadMore ? "..Read More" : post.desc}
-      </span>
+      <Link to={"/post/" + post._id} className="link">
+        <span onClick={toggleReadMore} className="read-or-hide">
+          {isReadMore ? "..Read More" : post.desc}
+        </span>
       </Link>
     </p>
   );
 };
- 
+
 export default function Post({ post }) {
-  const PF = "http://localhost:5000/images/";
+  const PF = process.env.REACT_APP_API_URL + "/images/";
   return (
     <div className="post">
       {post.photo && <img className="postImg" src={PF + post.photo} alt="" />}
@@ -41,9 +41,7 @@ export default function Post({ post }) {
         </span>
       </div>
       <p>
-        <ReadMore>
-        {post}
-        </ReadMore>
+        <ReadMore>{post}</ReadMore>
       </p>
     </div>
   );
